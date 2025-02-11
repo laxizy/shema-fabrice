@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile and Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+            
+        }
+        .header {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .signup-container {
+            background: rgba(170, 49, 240, 0.856);
+            padding: 60px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgb(0, 136, 247);
+            width: 300px;
+            margin: auto;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #030303;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #00ff3c;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #00ff37;
+        }
+        .profile-tab, .home-tab {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Initially hidden */
+        }
+        .profile-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: black;
+            margin: 0 auto;
+        }
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .tab {
+            padding: 10px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            transition: background 0.5s;
+        }
+        .tab:hover {
+            background: #8c4bf5;
+        }
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 10px));
+            gap: 15px;
+            margin-top: 40px;
+        }
+        .post {
+            background: rgb(233, 253, 253);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .post img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .icons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: transform 0.4s;
+            color: white;
+            font-size: 24px;
+        }
+        .icon:hover {
+            transform: scale(1.2);
+        }
+        .home-icon { background-color: #3feeee; }
+        .post-icon { background-color: #007bff; }
+        .message-icon { background-color: #f175dd; }
+        .settings-icon { background-color: #00ff3c; }
+        .logout-button {
+            margin-top: 5%;
+            padding: 10px;
+            background: #35dc8e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        .logout-button:hover {
+            background: #2357c8;
+        }
+        .back-button {
+            margin-top: 20px;
+            padding: 10px;
+            background: #fa27fa;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .back-button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="pageTitle">User Profile</h1>
+        </div>
+
+        <div class="signup-container" id="loginForm">
+            <h2>Login</h2>
+            <form id="login">
+                <input type="text" placeholder="Username" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">LOGIN</button>
+            </form>
+            <div class="footer">
+                <p>Create New Account? <a href="#" id="showSignup">Sign up</a></p>
+            </div>
+        </div>
+
+        <div class="signup-container" id="signupForm" style="display: none;">
+            <h2>Sign Up</h2>
+            <form id="signup">
+                <input type="text" placeholder="Username" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">SIGN UP</button>
+            </form>
+            <div class="footer">
+                <p>Already have an account? <a href="#" id="showLogin">Log in</a></p>
+            </div>
+        </div>
+
+        <div class="profile-tab" id="profileTab">
+            <div class="profile-image">✨</div>
+            <h2>Username</h2>
+
+            <div class="tabs">
+                <div class="tab post-icon" id="showPostsTab">Posts</div>
+                <div class="tab message-icon" id="showMessagesTab">Messages</div>
+                <div class="tab home-icon" id="goHomeTab">Home</div>
+            </div>
+
+            <div id="postsGrid">
+                <h3>Your Posts</h3>
+                <div class="post-grid">
+                    <div class="post">
+                        <img src="Screenshot_20250102-205201.png" alt="Lion">
+                        <p>Lion in the Park</p>
+                    </div>
+                    <div class="post">
+                        <img src="d:\most pop\1 (14).jpg" alt="Zebra">
+                        <p>Zebra Grazing</p>
+                    </div>
+                    <div class="post">
+                        <img src="d:\most pop\1074434.jpg" alt="Giraffe">
+                        <p>Giraffe Eating Leaves</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-grid" id="messagesTab" style="display: none;">
+                <h3>Your Messages</h3>
+                <div class="post">Message 1</div>
+                <div class="post">Message 2</div>
+                <div class="post">Message 3</div>
+            </div>
+
+            <div class="icons">
+                <div class="icon settings-icon" title="Settings" id="settingsIcon">⚙️</div>
+                <div class="icon post-icon" title="Create Post" id="createPostIcon">-➕</div>
+                <div class="icon message-icon" title="Messages" id="messageIcon">📩</div>
+                <div class="icon home-icon" id="goHomeIcon" title="Home">🏠</div>
+            </div>
+
+            <button class="logout-button" id="logoutButton">Logout</button>
+        </div>
+
+        <div class="home-tab" id="homeTab" style="display: none;">
+            <h1>Home</h1>
+            <div class="post-grid">
+                <div class="post">
+                    <img src="d:\most pop\Copy of IMG-20231013-WA0006.jpg" alt="User Post 1">
+                    <p>show me who you are</p>
+                </div>
+                <div class="post">
+                    <img src="d:\most pop\Copy of IMG_0968.JPG" alt="User Post 2">
+                    <p>dont touch my phone</p>
+                </div>
+                <div class="post">
+                    <img src="d:\most pop\Copy of IMG_0996.JPG" alt="User Post 3">
+                    <p>academiccolor filter</p>
+                </div>
+                <div class="post">
+                    <img src="d:\most pop\937ddee85e6e530f9da5f26a239db020.png"alt="User Post 4">
+                    <p>moon light</p>
+                </div>
+                <div class="post">
+                    <img src="d:\most pop\Copy of IMG-20231013-WA0000.jpg" alt="User Post 5">
+                    <p>dice is life</p>
+                </div>
+            </div>
+
+            <div class="footer">
+                <button class="back-button" id="backToMenuButton">Back to Main Menu</button>
+            </div>
+
+            <div class="news">
+                <h3>Latest News</h3>
+                <p>kigali_today postsGrid</p>
+                <p>igihepost</p>
+                <p>rwanda tv post-grid</p>
+            </div>
+
+            <div class="notifications">
+                <h3>Notifications</h3>
+                <p>Notification 1</p>
+                <p>Notification 2</p>
+                <p>Notification 3</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2025 laxizy_shema</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('showSignup').onclick = function() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'block';
+        };
+
+        document.getElementById('showLogin').onclick = function() {
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        };
+
+        document.getElementById('login').onsubmit = function(event) {
+            event.preventDefault();
+            document.querySelector('.signup-container').style.display = 'none';
+            document.getElementById('profileTab').style.display = 'block';
+            document.getElementById('pageTitle').textContent = 'User Profile'; // Set page title
+        };
+
+        document.getElementById('signup').onsubmit = function(event) {
+            event.preventDefault();
+            document.querySelector('.signup-container').style.display = 'none';
+            document.getElementById('profileTab').style.display = 'block';
+            document.getElementById('pageTitle').textContent = 'User Profile'; // Set page title
+        };
+
+        document.getElementById('showPostsTab').onclick = function() {
+            document.getElementById('postsGrid').style.display = 'block';
+            document.getElementById('messagesTab').style.display = 'none';
+        };
+
+        document.getElementById('showMessagesTab').onclick = function() {
+            document.getElementById('postsGrid').style.display = 'none';
+            document.getElementById('messagesTab').style.display = 'block';
+        };
+
+        document.getElementById('goHomeTab').onclick = function() {
+            document.getElementById('profileTab').style.display = 'none';
+            document.getElementById('homeTab').style.display = 'block';
+            document.getElementById('pageTitle').textContent = 'Home'; // Change title to Home
+        };
+
+        document.getElementById('logoutButton').onclick = function() {
+            document.getElementById('profileTab').style.display = 'none'; // Hide profile
+            document.getElementById('loginForm').style.display = 'block'; // Show login form
+        };
+
+        // Click event for Back to Main Menu button
+        document.getElementById('backToMenuButton').onclick = function() {
+            document.getElementById('homeTab').style.display = 'none'; // Hide home
+            document.getElementById('profileTab').style.display = 'block'; // Show profile
+            document.getElementById('pageTitle').textContent = 'User Profile'; // Change title back
+        };
+
+        // Click event for Settings icon
+        document.getElementById('settingsIcon').onclick = function() {
+            alert("Settings clicked!"); // Placeholder for settings functionality
+        };
+
+        // Click event for Create Post icon
+        document.getElementById('createPostIcon').onclick = function() {
+            alert("Create Post clicked!"); // Placeholder for create post functionality
+        };
+
+        // Click event for Messages icon
+        document.getElementById('messageIcon').onclick = function() {
+            document.getElementById('postsGrid').style.display = 'none';
+            document.getElementById('messagesTab').style.display = 'block';
+            document.getElementById('pageTitle').textContent = 'Messages'; // Change title to Messages
+        };
+
+        // Click event for Home icon
+        document.getElementById('goHomeIcon').onclick = function() {
+            document.getElementById('profileTab').style.display = 'none';
+            document.getElementById('homeTab').style.display = 'block';
+            document.getElementById('pageTitle').textContent = 'Home'; // Change title to Home
+        };
+    </script>
+</body> 
+welcome to our website"laxytube"
+</html>
